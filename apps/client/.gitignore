@@ -1,0 +1,6 @@
+# ⚡ Archivos de Node.js
+node_modules/
+dist/
+
+# ⚡ Configuración de Vercel
+.vercel/
