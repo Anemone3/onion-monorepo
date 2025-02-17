@@ -5,13 +5,14 @@ import { Wishlist } from "../components/wishlist/Wishlist";
 import { ShippingAddress } from "../components/address/ShippingAddress";
 import { Password } from "../components/password/Password";
 import { AccountDetail } from "../components/accountdetail/AccountDetail";
+import { EmptyList } from "../components/EmptyList";
 
 const ProfileRoutes = () => {
   return (
     <Routes>
       <Route element={<ProfilePage />}>
         <Route index element={<Navigate to="/profile/orders" />} />
-        <Route path="orders" element={<Orders />} />
+        <Route path="orders" element={<EmptyList />} />
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="address" element={<ShippingAddress />} />
         <Route path="change-password" element={<Password />} />

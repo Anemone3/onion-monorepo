@@ -15,7 +15,7 @@ export const AfterPayment = () => {
     <div className="flex min-h-[calc(100vh-120px)] flex-col xl:min-h-[calc(100vh-77px)]">
       <Breadcrumbs
         title={contextTitle}
-        className={isSuccess ? "bg-green-200" : "bg-red-100"}
+        className={`py-10 ${isSuccess ? "bg-green-200" : "bg-red-100"}`}
         location={contextTitle}
       />
       <div className="flex flex-grow flex-col items-center justify-center text-center">

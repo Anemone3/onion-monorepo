@@ -10,7 +10,7 @@ const CartPage = () => {
         title="Cart"
         location="Cart"
         reference="Ecommerce"
-        className="bg-slate-100"
+        className="bg-slate-100 py-10"
       />
       <section className="container mx-auto my-16 flex px-40 lg:gap-40 2xl:gap-64">
         <div className="w-[628px] max-w-full">

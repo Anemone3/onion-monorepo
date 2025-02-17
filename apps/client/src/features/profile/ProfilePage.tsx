@@ -3,7 +3,6 @@ import { Container } from "@/shared/components/Container";
 import { NavLink, Outlet } from "react-router-dom";
 import { menuList } from "./components/menu-list";
 
-
 export const ProfilePage = () => {
   return (
     <>
@@ -28,7 +27,7 @@ export const ProfilePage = () => {
               </NavLink>
             ))}
           </ul>
-          <div className="mx-12 flex-grow">
+          <div className="mx-12 flex-grow relative">
             <Outlet />
           </div>
         </div>

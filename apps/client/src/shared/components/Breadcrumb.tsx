@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 interface BreadCrumbProps {
-  title: string;
+  title?: string;
   reference?: string;
   location: string;
   className?: string;
@@ -18,11 +18,11 @@ interface BreadCrumbProps {
 export const Breadcrumbs = ({
   location,
   reference = "Ecommerce",
-  title,
-  className = "bg-slate-100",
+  title = "",
+  className = "bg-slate-100  py-10",
 }: BreadCrumbProps) => {
   return (
-    <div className={`${className} py-10`}>
+    <div className={`${className}`}>
       <Container>
         <h2 className="pb-2 text-2xl font-bold">{title}</h2>
         <Breadcrumb className="flex items-center gap-2">
