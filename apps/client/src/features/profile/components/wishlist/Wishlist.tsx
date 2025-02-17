@@ -1,5 +1,4 @@
 import { EmptyList } from "../EmptyList";
-import { WishlistItem } from "./WishlistItem";
 
 export const Wishlist = () => {
   return (

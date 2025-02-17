@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface EmptyProps {
-  context: string;
+  context?: string;
 }
 
 export const EmptyList = ({ context = "Order history" }: EmptyProps) => {
