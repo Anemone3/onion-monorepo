@@ -1,6 +1,13 @@
 # ⚡ Node.js
 node_modules/
-dist/
+dist
 
 # ⚡ Archivos de configuración
 .env
+.development.env
+prisma/migrations
+docker-compose.yml
+.prettierrc
+CHANGELOG.md
+
+mysql

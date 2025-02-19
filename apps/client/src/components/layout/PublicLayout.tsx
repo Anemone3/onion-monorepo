@@ -28,7 +28,12 @@ export const PublicLayout = () => {
         <nav className="flex flex-wrap items-center justify-between py-5">
           <div className="flex items-center gap-5">
             <img src={logo} alt="logo" />
-            <h2 onClick={()=> navigate("/")} className="cursor-pointer text-2xl font-semibold">Ecommerce</h2>
+            <h2
+              onClick={() => navigate("/")}
+              className="cursor-pointer text-2xl font-semibold"
+            >
+              Ecommerce
+            </h2>
           </div>
           <NavigationMenu>
             <NavigationMenuList className="flex gap-4">
@@ -40,7 +45,9 @@ export const PublicLayout = () => {
                         {i.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <NavigationMenuLink>Link</NavigationMenuLink>
+                        <NavigationMenuLink>
+                          <Link to="/collection">products</Link>
+                        </NavigationMenuLink>
                       </NavigationMenuContent>
                     </>
                   ) : (
