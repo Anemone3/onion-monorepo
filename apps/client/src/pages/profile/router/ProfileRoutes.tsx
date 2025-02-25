@@ -7,6 +7,8 @@ import { Password } from "../components/password/Password";
 import { AccountDetail } from "../components/accountdetail/AccountDetail";
 
 const ProfileRoutes = () => {
+
+
   return (
     <Routes>
       <Route element={<ProfilePage />}>
@@ -15,7 +17,7 @@ const ProfileRoutes = () => {
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="address" element={<ShippingAddress />} />
         <Route path="change-password" element={<Password />} />
-        <Route path="detail" element={<AccountDetail />} />
+        <Route path="detail" element={<AccountDetail/>} />
         <Route path="*" element={<Navigate to="/profile/orders" />} />
       </Route>
     </Routes>

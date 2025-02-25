@@ -12,8 +12,11 @@ export class UserService {
       const user = await this.prismaService.user.create({
         data: {
           ...userData,
-          role: role
+          role: role,
         },
+        include:{
+          customer: true
+        }
       });
 
       return user;
@@ -32,11 +35,21 @@ export class UserService {
   }
 
   async findOne(id: string) {
-
     const isEmail = id.includes('@');
 
     return await this.prismaService.user.findUnique({
-      where: isEmail ? { email: id } : { id: id}
+      where: isEmail ? { email: id } : { id: id },
+      include: {
+        customer: {
+          select: {
+            address: true,
+            phone: true,
+            departamento: true,
+            country: true,
+            zipcode: true
+          }
+        },
+      }
     });
   }
 

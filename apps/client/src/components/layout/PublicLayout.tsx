@@ -11,6 +11,15 @@ import {
 } from "../ui/navigation-menu";
 import { Container } from "@/shared/components/Container";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 const MenuList = [
   { title: "Home", path: "/" },
@@ -19,8 +28,19 @@ const MenuList = [
   { title: "Contact", path: "/contact" },
 ];
 
+const ProfileNavigation = [
+  { name: "Profile", path: "profile" },
+  { name: "Settings", path: "profile/detail" },
+  { name: "Logout", path: "/" },
+];
+
 export const PublicLayout = () => {
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+
+
+
+  
 
   return (
     <>
@@ -45,7 +65,7 @@ export const PublicLayout = () => {
                         {i.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <NavigationMenuLink>
+                        <NavigationMenuLink asChild>
                           <Link to="/collection">products</Link>
                         </NavigationMenuLink>
                       </NavigationMenuContent>
@@ -73,10 +93,27 @@ export const PublicLayout = () => {
               onClick={() => navigate("/cart")}
               className="h-5 w-5 cursor-pointer text-gray-700"
             />
-            <UserCircle
-              onClick={() => navigate("/profile")}
-              className="h-5 w-5 cursor-pointer text-gray-700"
-            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                {user ? (
+                  <img
+                    className="h-5 w-5 cursor-pointer select-none object-cover"
+                    src={user.profile}
+                  />
+                ) : (
+                  <UserCircle className="h-5 w-5 cursor-pointer select-none text-gray-700" />
+                )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {ProfileNavigation.map(({ name, path }, index) => (
+                  <DropdownMenuItem key={index} asChild>
+                    <Link to={path}>{name}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </nav>
       </Container>

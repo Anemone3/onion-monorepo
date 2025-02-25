@@ -6,6 +6,7 @@ export class LoginDto {
 
   @IsStrongPassword({
     minSymbols: 0,
+    minLength: 6,
   })
   password: string;
 }

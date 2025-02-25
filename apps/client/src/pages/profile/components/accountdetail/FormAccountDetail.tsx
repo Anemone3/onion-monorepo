@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 const formSchema = z.object({
   fullname: z.string().min(6, "Debe tener al menos 6 caracteres"),
@@ -20,11 +21,13 @@ const formSchema = z.object({
 type FormAccount = z.infer<typeof formSchema>;
 
 export const FormAccountDetail = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const form = useForm<FormAccount>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullname: "",
-      email: "",
+      fullname: user ? user.firstname + " " + user.lastname : "",
+      email: user ? user.email : "",
     },
   });
 
@@ -36,6 +39,7 @@ export const FormAccountDetail = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    //todo: logica para separar el value (fullname) a firstname + lastname (enviarselo de esa manera al backend)
   }
 
   return (

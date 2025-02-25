@@ -1,8 +1,6 @@
 import { IsPhoneNumber, IsString, IsUUID, MinLength } from 'class-validator';
 
 export class CreateCustomerDto {
-  @IsUUID('4')
-  userId: string;
   @IsString()
   @MinLength(6)
   address: string;

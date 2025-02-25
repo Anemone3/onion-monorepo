@@ -7,8 +7,8 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 export class CustomerService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createCustomerDto: CreateCustomerDto) {
-    const { userId, ...customerDto } = createCustomerDto;
+  async create(userId: string,createCustomerDto: CreateCustomerDto) {
+    const { ...customerDto } = createCustomerDto;
 
     try {
       const customer = await this.prismaService.customer.create({
@@ -24,8 +24,8 @@ export class CustomerService {
     }
   }
 
-  async update(updateCustomerDto: UpdateCustomerDto) {
-    const { userId, ...updateCustomer } = updateCustomerDto;
+  async update(userId:string,updateCustomerDto: UpdateCustomerDto) {
+    const { ...updateCustomer } = updateCustomerDto;
 
     try {
       const customer = await this.prismaService.customer.update({

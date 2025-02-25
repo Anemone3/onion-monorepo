@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAppSelector } from "@/hooks/useAppSelector";
 const formSchema = z.object({
   streetAddress: z.string().min(3, "Debe tener al menos 3 caracteres"),
   city: z.string().min(2, "Debe tener al menos 2 caracteres"),
-  state: z.string().min(2, "Debe tener al menos 2 caracteres"),
+  phone: z.number().min(2, "Debe tener al menos 2 caracteres"),
   zipcode: z.coerce.number().min(1000, "Código postal inválido"),
   country: z.string().min(3, "Debe tener al menos 3 caracteres"),
 });
@@ -22,14 +23,16 @@ const formSchema = z.object({
 type FormAddress = z.infer<typeof formSchema>;
 
 export const FormAddress = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const form = useForm<FormAddress>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      city: "",
-      country: "",
-      state: "",
-      zipcode: undefined,
-      streetAddress: "",
+      city: user?.customer ? user.customer.departamento : "",
+      country: user?.customer ? user.customer.country : "",
+      phone: user?.customer ? parseInt(user.customer.phone) : undefined,
+      zipcode: user?.customer ? parseInt(user.customer.zipcode) : undefined,
+      streetAddress: user?.customer ? user?.customer.address : "",
     },
   });
 
@@ -77,12 +80,12 @@ export const FormAddress = () => {
 
           <FormField
             control={control}
-            name="state"
+            name="phone"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>State</FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input placeholder="" {...field} value={field.value ?? ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -120,7 +123,7 @@ export const FormAddress = () => {
           />
         </div>
 
-        <Button className="w-36 h-11"  type="submit" disabled={isSubmitting}>
+        <Button className="h-11 w-36" type="submit" disabled={isSubmitting}>
           Save Changes
         </Button>
       </form>
