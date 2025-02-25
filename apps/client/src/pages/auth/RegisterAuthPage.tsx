@@ -42,7 +42,7 @@ export const RegisterAuthPage = () => {
     confirmPassword: "",
   });
 
-  const [register, { isSuccess }] = useRegisterUserMutation();
+  const [register, {  }] = useRegisterUserMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
