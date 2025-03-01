@@ -7,28 +7,29 @@ import { Breadcrumbs } from "@/shared/components/Breadcrumb";
 import { Categories } from "./components/Categories";
 import { ProductList } from "./components/ProductList";
 import { Container } from "@/shared/components/Container";
-import { useState } from "react";
-import { ProductResponse } from "@/models/product-interface";
 
-interface ProductState {
-  filter: string;
-  products: ProductResponse;
-}
+// interface ProductState {
+//   filter: string;
+//   products: ProductResponse;
+// }
 
 export const Collection = () => {
   const { data: productsAll, isLoading } = useGetProductsQuery();
   const { data: categories } = useGetCategoriesQuery();
 
-  const [products, setProducts] = useState<ProductState | null>(() =>
-    productsAll
-      ? {
-          filter: "all",
-          products: productsAll,
-        }
-      : null,
-  );
+  // const [products, setProducts] = useState<ProductState | null>(() =>
+  //   productsAll
+  //     ? {
+  //         filter: "all",
+  //         products: productsAll,
+  //       }
+  //     : null,
+  // );
 
   if (isLoading && !productsAll && !categories) return <div>Loading...</div>;
+
+
+
 
   return (
     <>
@@ -39,7 +40,7 @@ export const Collection = () => {
             className="h-full w-1/5 border border-gray-900"
             categories={categories!}
           />
-          <ProductList products={products?.products} />
+          <ProductList products={productsAll} />
         </div>
       </Container>
     </>

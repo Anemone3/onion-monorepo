@@ -4,7 +4,7 @@ interface ProductListProps {
     products: ProductResponse | undefined
 }
 
-export const ProductList = ({products}:ProductListProps) => {
+export const ProductList = ({}:ProductListProps) => {
   return (
     <div>
         Product List..
