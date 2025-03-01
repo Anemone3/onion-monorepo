@@ -5,7 +5,6 @@ dist
 # ⚡ Archivos de configuración
 .env
 .development.env
-prisma/migrations
 docker-compose.yml
 .prettierrc
 CHANGELOG.md
