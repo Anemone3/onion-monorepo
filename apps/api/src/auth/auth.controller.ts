@@ -55,4 +55,13 @@ export class AuthController {
 
     return auth;
   }
+
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    res.clearCookie('refreshToken');
+
+    return res.cookie['refreshToken'] === undefined
+      ? res.status(HttpStatus.ACCEPTED).json({ message: 'account is logout', ok: true })
+      : res.status(HttpStatus.BAD_REQUEST).json({ message: 'failed to logout', ok: false });
+  }
 }

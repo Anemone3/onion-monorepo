@@ -20,6 +20,10 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { useLogoutUserMutation } from "@/redux/api/auth.api";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { setLogout } from "@/redux/slices/authslice";
 
 const MenuList = [
   { title: "Home", path: "/" },
@@ -37,10 +41,15 @@ const ProfileNavigation = [
 export const PublicLayout = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const [logout, { data }] = useLogoutUserMutation();
 
-
-
-  
+  useEffect(() => {
+    if (data && data.ok) {
+      dispatch(setLogout());
+    }
+    console.log(data);
+  }, [data]);
 
   return (
     <>
@@ -109,7 +118,16 @@ export const PublicLayout = () => {
                 <DropdownMenuSeparator />
                 {ProfileNavigation.map(({ name, path }, index) => (
                   <DropdownMenuItem key={index} asChild>
-                    <Link to={path}>{name}</Link>
+                    {name === "Logout" ? (
+                      <Link
+                        to={path}
+                        onClick={async () => await logout().unwrap()}
+                      >
+                        {name}
+                      </Link>
+                    ) : (
+                      <Link to={path}>{name}</Link>
+                    )}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

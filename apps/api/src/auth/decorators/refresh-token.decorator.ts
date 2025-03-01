@@ -1,15 +1,12 @@
-import { createParamDecorator, ExecutionContext, ForbiddenException } from "@nestjs/common";
-import { Request } from "express";
+import { createParamDecorator, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import { Request } from 'express';
 
+export const GetRefreshToken = createParamDecorator((data: string, context: ExecutionContext) => {
+  const req = context.switchToHttp().getRequest<Request>();
 
-export const GetRefreshToken = createParamDecorator((data:string,context: ExecutionContext)=>{
+  const { refreshToken } = req.cookies;
 
-    const req = context.switchToHttp().getRequest<Request>();
+  if (!refreshToken) throw new ForbiddenException('No se encontro el refreshToken');
 
-    
-    const { refreshToken } = req.cookies;
-
-    if(!refreshToken) throw new ForbiddenException('No se encontro el refreshToken')
-
-    return data ? req.cookies[data] : refreshToken;
-})
+  return data ? req.cookies[data] : refreshToken;
+});

@@ -41,6 +41,15 @@ export const baseQueryWithReauth = async (
       result = await baseQuery(args, api, extraOptions);
     } else {
       // Si falla la renovación, cerrar sesión
+      await baseQuery(
+        {
+          url: "/auth/logout",
+          method: "POST",
+          credentials: 'include'
+        },
+        api,
+        extraOptions,
+      );
     }
   }
 

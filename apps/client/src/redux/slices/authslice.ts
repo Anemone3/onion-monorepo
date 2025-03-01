@@ -25,10 +25,15 @@ export const authSlice = createSlice({
     },
     setToken: (state, action: PayloadAction<string>) => {
       console.log(action.payload);
-      
+
       state.accessToken = action.payload;
+    },
+    setLogout: (state) => {
+      state.user = INITIAL_STATE.user,
+      state.accessToken = INITIAL_STATE.accessToken,
+      state.status = INITIAL_STATE.status
     },
   },
 });
 
-export const { setCredentials, setToken } = authSlice.actions;
+export const { setCredentials, setToken, setLogout } = authSlice.actions;
