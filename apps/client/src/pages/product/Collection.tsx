@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/shared/components/Breadcrumb";
 import { Categories } from "./components/Categories";
 import { ProductList } from "./components/ProductList";
 import { Container } from "@/shared/components/Container";
+import { useState } from "react";
 
 // interface ProductState {
 //   filter: string;
@@ -14,19 +15,10 @@ import { Container } from "@/shared/components/Container";
 // }
 
 export const Collection = () => {
-  const { data: productsAll, isLoading } = useGetProductsQuery();
-  const { data: categories } = useGetCategoriesQuery();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { data: categories, isLoading: isLoadingCategories } = useGetCategoriesQuery();
+  const { data: products, isLoading:isLoadingProducts } = useGetProductsQuery();
 
-  // const [products, setProducts] = useState<ProductState | null>(() =>
-  //   productsAll
-  //     ? {
-  //         filter: "all",
-  //         products: productsAll,
-  //       }
-  //     : null,
-  // );
-
-  if (isLoading && !productsAll && !categories) return <div>Loading...</div>;
 
 
 
@@ -36,11 +28,20 @@ export const Collection = () => {
       <Breadcrumbs className="bg-gray-100 pb-[18px] pt-3" location="Search" />
       <Container>
         <div className="flex w-full max-w-full flex-1 gap-5">
-          <Categories
+          { 
+          (isLoadingProducts && isLoadingCategories) ? (<div>Loading skeleton</div>)
+            :(
+            <>
+            <Categories
             className="h-full w-1/5 border border-gray-900"
             categories={categories!}
+            selectedCategories={selectedCategories}
+            setCategories={setSelectedCategories}
           />
-          <ProductList products={productsAll} />
+          <ProductList products={products} />
+          </>
+            )
+          }
         </div>
       </Container>
     </>

@@ -2,7 +2,7 @@ import { VITE_API } from "@/shared/envs";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { RootState } from "../store";
 import { RefreshTokenResponse } from "@/models/register-request.interface";
-import { setToken } from "../slices/authslice";
+import { setLogout, setPendingAuth, setToken } from "../slices/authslice";
 
 export const baseQueryWithReauth = async (
   args: any,
@@ -25,6 +25,10 @@ export const baseQueryWithReauth = async (
 
   // Si el backend responde con 401, intentamos refrescar el token
   if (result.error && result.error.status === 401) {
+
+    api.dispatch(setPendingAuth());
+    
+
     console.log("Token expirado, intentando refrescar...");
 
     const refreshResult = await baseQuery(
@@ -32,6 +36,8 @@ export const baseQueryWithReauth = async (
       api,
       extraOptions,
     );
+
+    console.log(refreshResult)
 
     if (refreshResult.data) {
       const newAccessToken = (refreshResult.data as RefreshTokenResponse)
@@ -41,6 +47,8 @@ export const baseQueryWithReauth = async (
       result = await baseQuery(args, api, extraOptions);
     } else {
       // Si falla la renovación, cerrar sesión
+      console.log('Logout');
+      
       await baseQuery(
         {
           url: "/auth/logout",
@@ -50,6 +58,8 @@ export const baseQueryWithReauth = async (
         api,
         extraOptions,
       );
+
+      api.dispatch(setLogout())
     }
   }
 

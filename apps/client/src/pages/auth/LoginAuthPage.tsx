@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { LoginRequest } from "@/models";
 import { useLoginUserMutation } from "@/redux/api/auth.api";
 import { setCredentials } from "@/redux/slices/authslice";
@@ -17,7 +18,7 @@ const loginSchema = z.object({
 
 export const LoginAuthPage = () => {
   const navigate = useNavigate();
-
+  const { status } = useAppSelector((state) => state.auth);
   const [login, { error }] = useLoginUserMutation();
   const dispatch = useAppDispatch();
   const {
@@ -29,6 +30,10 @@ export const LoginAuthPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  if (status === "pending") {
+    <div>Loading user..</div>;
+  }
+
   const onSubmit: SubmitHandler<LoginRequest> = async ({ email, password }) => {
     try {
       const user = await login({ email, password }).unwrap();
@@ -37,7 +42,7 @@ export const LoginAuthPage = () => {
 
       if (user) navigate("/profile", { replace: true });
     } catch (error) {
-      reset();
+      reset({ password: "" });
     }
   };
 
@@ -73,11 +78,7 @@ export const LoginAuthPage = () => {
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-          {error && (
-            <p className="text-sm text-red-500">
-              Invalid Credentials
-            </p>
-          )}
+          {error && <p className="text-sm text-red-500">Invalid Credentials</p>}
 
           <Button type="submit" className="w-full">
             Log in

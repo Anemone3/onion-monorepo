@@ -50,7 +50,9 @@ export class AuthService {
         refreshToken,
       };
     } catch (error) {
-      console.log(error);
+      if (error instanceof ForbiddenException) {
+        throw error;
+      }
       throw new InternalServerErrorException('Login error');
     }
   }

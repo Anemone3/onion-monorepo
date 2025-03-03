@@ -8,7 +8,7 @@ interface AuthState {
 }
 
 const INITIAL_STATE: AuthState = {
-  status: "not-authenticate",
+  status: "pending",
   user: null,
   accessToken: null,
 };
@@ -19,21 +19,35 @@ export const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action: PayloadAction<UserResponse>) => {
       const { accessToken, user } = action.payload;
+
+      /* TODO: Mejorar el envio del accessToken, endpoints a mirar: (getProfile, [Login,Register]), esos dos envian de diferente manera */
+      if (accessToken) {
+        state.accessToken = accessToken;
+      }
       state.user = user;
-      state.accessToken = accessToken;
       state.status = "authenticated";
     },
     setToken: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
-
       state.accessToken = action.payload;
     },
     setLogout: (state) => {
-      state.user = INITIAL_STATE.user,
-      state.accessToken = INITIAL_STATE.accessToken,
-      state.status = INITIAL_STATE.status
+      (state.user = INITIAL_STATE.user),
+        (state.accessToken = INITIAL_STATE.accessToken),
+        (state.status = "not-authenticate");
+    },
+    setPendingAuth: (state) => {
+      state.status = "pending";
+    },
+    setNotAuthenticate: (state) => {
+      state.status = "not-authenticate";
     },
   },
 });
 
-export const { setCredentials, setToken, setLogout } = authSlice.actions;
+export const {
+  setCredentials,
+  setToken,
+  setLogout,
+  setPendingAuth,
+  setNotAuthenticate,
+} = authSlice.actions;

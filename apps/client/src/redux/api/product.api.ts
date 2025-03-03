@@ -8,9 +8,9 @@ export const productApi = createApi({
     baseUrl: VITE_API,
   }),
   endpoints: (builder) => ({
-    getProducts: builder.query<ProductResponse, void>({
+    getProducts: builder.query<ProductResponse[], void>({
       query: () => ({
-        url: "product",
+        url: "products",
         method: "GET",
       }),
     }),

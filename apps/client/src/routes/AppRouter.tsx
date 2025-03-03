@@ -9,7 +9,12 @@ import { PrivateRouter } from "./PrivateRouter";
 import { AuthRouter } from "@/pages/auth/router/AuthRouter";
 import { useGetUserQuery, useRefreshTokenMutation } from "@/redux/api/auth.api";
 import { useDispatch } from "react-redux";
-import { setCredentials, setToken } from "@/redux/slices/authslice";
+import {
+  setCredentials,
+  setNotAuthenticate,
+  setToken,
+} from "@/redux/slices/authslice";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 // const CartPage = lazy(() => import("@/features/cart/CartPage"));
 const ProfileRoutes = lazy(
@@ -20,22 +25,27 @@ export const AppRoutes = () => {
   const { data: userData, isLoading } = useGetUserQuery();
   const [getAccessToken, {}] = useRefreshTokenMutation();
   const dispatch = useDispatch();
+  const { status } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log("datos del usuario", userData);
     if (!userData) {
       getAccessToken()
         .unwrap()
         .then((data) => {
           dispatch(setToken(data.accessToken));
+        })
+        .catch((err) => {
+          dispatch(setNotAuthenticate());
+
+          throw err;
         });
     } else {
       dispatch(setCredentials(userData));
     }
   }, [userData]);
 
-  if (isLoading) {
-    <div>Loading credentials...</div>;
+  if (isLoading || status === "pending") {
+    return <div>Loading credentials...</div>;
   }
 
   return (
