@@ -18,7 +18,7 @@ const ProfileRoutes = () => {
         <Route path="address" element={<ShippingAddress />} />
         <Route path="change-password" element={<Password />} />
         <Route path="detail" element={<AccountDetail/>} />
-        <Route path="/*" element={<Navigate to="/profile/orders" />} />
+        <Route path="/*" element={<Navigate to="/profile" />} />
       </Route>
     </Routes>
   );
