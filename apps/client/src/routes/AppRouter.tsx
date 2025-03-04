@@ -3,7 +3,7 @@ import CartPage from "@/pages/cart/CartPage";
 import { Home } from "@/pages/home/Home";
 import { AfterPayment } from "@/pages/payment/AfterPayment";
 import { Collection } from "@/pages/product/Collection";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PrivateRouter } from "./PrivateRouter";
 import { AuthRouter } from "@/pages/auth/router/AuthRouter";
@@ -15,11 +15,12 @@ import {
   setToken,
 } from "@/redux/slices/authslice";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import ProfileRoutes from "@/pages/profile/router/ProfileRoutes";
 
 // const CartPage = lazy(() => import("@/features/cart/CartPage"));
-const ProfileRoutes = lazy(
-  () => import("@/pages/profile/router/ProfileRoutes"),
-);
+// const ProfileRoutes = lazy(
+//   () => import("@/pages/profile/router/ProfileRoutes"),
+// );
 
 export const AppRoutes = () => {
   const { data: userData, isLoading } = useGetUserQuery();
@@ -61,7 +62,7 @@ export const AppRoutes = () => {
           <Route index element={<Home />} />
           <Route path="cart/*" element={<CartPage />} />
           <Route element={<PrivateRouter />}>
-            <Route path="profile/*" element={<ProfileRoutes />} />
+            <Route path="/profile/*" element={<ProfileRoutes />} />
             <Route path="success" element={<AfterPayment />} />
           </Route>
 
