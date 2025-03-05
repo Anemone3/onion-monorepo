@@ -14,7 +14,6 @@ import {
   setNotAuthenticate,
   setToken,
 } from "@/redux/slices/authslice";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import ProfileRoutes from "@/pages/profile/router/ProfileRoutes";
 
 // const CartPage = lazy(() => import("@/features/cart/CartPage"));
@@ -23,10 +22,9 @@ import ProfileRoutes from "@/pages/profile/router/ProfileRoutes";
 // );
 
 export const AppRoutes = () => {
-  const { data: userData, isLoading } = useGetUserQuery();
+  const { data: userData } = useGetUserQuery();
   const [getAccessToken, {}] = useRefreshTokenMutation();
   const dispatch = useDispatch();
-  const { status } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (!userData) {
@@ -45,7 +43,6 @@ export const AppRoutes = () => {
     }
   }, [userData]);
 
-
   return (
     <Suspense
       fallback={
@@ -61,7 +58,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRouter />}>
             <Route path="profile/*" element={<ProfileRoutes />} />
             <Route path="success" element={<AfterPayment />} />
-            <Route path="*" element={<Navigate to="/"/>}/>
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
 
           <Route path="collection" element={<Collection />} />
