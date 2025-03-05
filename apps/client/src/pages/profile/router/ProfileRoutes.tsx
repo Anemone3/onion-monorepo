@@ -7,18 +7,16 @@ import { Password } from "../components/password/Password";
 import { AccountDetail } from "../components/accountdetail/AccountDetail";
 
 const ProfileRoutes = () => {
-
-
   return (
     <Routes>
-      <Route element={<ProfilePage />}>
-        <Route index element={<Navigate to="orders" replace/>} />
+      <Route path="/" element={<ProfilePage />}>
+        <Route index element={<Navigate to="orders" replace />} />
         <Route path="orders" element={<Orders />} />
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="address" element={<ShippingAddress />} />
         <Route path="change-password" element={<Password />} />
-        <Route path="detail" element={<AccountDetail/>} />
-        <Route path="/*" element={<Navigate to="/profile" />} />
+        <Route path="detail" element={<AccountDetail />} />
+        <Route path="*" element={<Navigate to="/orders" />} />
       </Route>
     </Routes>
   );

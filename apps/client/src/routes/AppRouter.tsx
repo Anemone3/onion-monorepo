@@ -45,9 +45,6 @@ export const AppRoutes = () => {
     }
   }, [userData]);
 
-  if (isLoading || status === "pending") {
-    return <div>Loading credentials...</div>;
-  }
 
   return (
     <Suspense
@@ -64,6 +61,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRouter />}>
             <Route path="profile/*" element={<ProfileRoutes />} />
             <Route path="success" element={<AfterPayment />} />
+            <Route path="*" element={<Navigate to="/"/>}/>
           </Route>
 
           <Route path="collection" element={<Collection />} />
